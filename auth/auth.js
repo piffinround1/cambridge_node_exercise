@@ -49,7 +49,16 @@ var auth = {
 		});
 	},
 
-	fbAuth : fbAuth.authenticate
+	fbAuth : fbAuth.authenticate,
+
+	checkIfLoggedIn : function(req, res, next){
+
+		if(req.isAuthenticated())
+			return next();
+
+		res.redirect("/");
+
+	}
 	
 
 

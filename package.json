@@ -1,0 +1,22 @@
+{
+  "name": "cambridge_core_exercise",
+  "version": "1.0.0",
+  "description": "Core team exercise",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.13.3",
+    "connect-mongo": "^0.8.2",
+    "express": "^4.13.3",
+    "express-session": "^1.11.3",
+    "handlebars": "^3.0.3",
+    "mongoose": "^4.1.1",
+    "passport": "^0.2.2",
+    "passport-facebook": "^2.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "ndomingo"
+}

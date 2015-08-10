@@ -30,11 +30,10 @@ passport.use(new passportFbStrategy({
 
 
 /*
-	dev incantations
+	dev incantations ;)
 */
 var mongocon =  require('./persistence/mongocon.js');
 var auth = require('./auth/auth.js');
-
 
 
 

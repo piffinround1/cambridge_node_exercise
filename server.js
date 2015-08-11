@@ -79,6 +79,13 @@ app.get('/news',auth.checkIfLoggedIn, function(req, res){
 });
 
 
+app.get('/auth/twitter', passport.authenticate('twitter'));
+
+app.get('/auth/twitter/callback', passport.authenticate('twitter', {failureRedirect: '/'}), 
+	function(req, res){
+		res.json({msg: 'done with twitter auth' + req.user});
+	});
+
 app.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
 
 app.get('/auth/facebook/callback', 
@@ -116,6 +123,6 @@ app.post('/login', passport.authenticate('local-auth',{failureRedirect: '/'}),
 app.listen(5000,function(){
 
 	
-	console.log('listening to port 5000');
+	console.log('let the love start @ port 5000');
 
 });

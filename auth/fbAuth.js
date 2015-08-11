@@ -1,16 +1,14 @@
 
-
+/* incantations*/
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var User = require('../persistence/user.js');
-var auth = require('./auth.js');
+var authConf = require('./authConf.js');
+/* incantations*/
 
-passport.use(new FacebookStrategy({
-    clientID: '1658069641104488',
-    clientSecret: '428197b7633c8413134bb5f00265e450',
-    callbackURL: "http://localhost:5000/auth/facebook/callback",
-    enableProof: false
-  },
+
+
+passport.use(new FacebookStrategy(authConf.facebook,
   function(accessToken, refreshToken, profile, done) {
       
       process.nextTick(function(){
@@ -53,16 +51,7 @@ passport.use(new FacebookStrategy({
 ));
 
 
-passport.serializeUser(function(user, done) {
-        done(null, user._id);
-});
 
-
-passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
-            done(err, user);
-    });
-});
     
 
 

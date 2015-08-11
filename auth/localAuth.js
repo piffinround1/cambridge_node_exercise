@@ -1,17 +1,13 @@
+/* incantations*/
 var passport = require('passport');
 
 var LocalStrategy = require('passport-local');
 var User = require('../persistence/user.js');
-
-passport.use('local-auth', new LocalStrategy({
-
-
-	usernameField : 'email',
-	passwordField : 'password',
-	passReqToCallback : true
+var authConf = require('./authConf.js');
+/* incantations*/
 
 
-},
+passport.use('local-auth', new LocalStrategy(authConf.local,
 
 	function(req, email, password, done){
 

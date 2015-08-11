@@ -1,7 +1,10 @@
+/* incantations*/
 var passport = require('passport');
 
 var LocalStrategy = require('passport-local');
 var User = require('../persistence/user.js');
+
+/* incantations*/
 
 passport.use('local-signup', new LocalStrategy({
 

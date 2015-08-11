@@ -1,9 +1,10 @@
+/* incantations*/
 var mongocon = require('./mongocon.js');
 
 var bcrypt = require('bcrypt-nodejs');
 
 var mongoose = mongocon.mongoose;
-
+/* incantations*/
 
 var userSchema = new mongoose.Schema({
 

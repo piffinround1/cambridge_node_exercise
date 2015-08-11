@@ -68,12 +68,12 @@ app.get('/', function(req, res){
 
 
 app.route('/news')
-   .get(/*auth.checkIfLoggedIn,*/ newsWorker.displayAllNews)
-   .post(/*auth.checkIfLoggedIn,*/ newsWorker.create);
+   .get(auth.checkIfLoggedIn, newsWorker.displayAllNews)
+   .post(auth.checkIfLoggedIn, newsWorker.create);
 
 app.route('/news/:news_id')
-	.get(newsWorker.displaySingleNews)
-	.put(newsWorker.editSingleNews);
+	.get(auth.checkIfLoggedIn,newsWorker.displaySingleNews)
+	.put(auth.checkIfLoggedIn,newsWorker.editSingleNews);
 
 
 

@@ -3,21 +3,24 @@
 var userDao = require('../persistence/user.js');
 var serverMsg = require('../util/serverMessage.js'); 
 var fbAuth = require('./fbAuth.js');
+var localSignUp = require('./localSignUp.js');
+var localAuth = require('./localAuth.js');
 
-var _auth = {
+
+/*var _auth = {
 
 	checkUser : function(usernameAndPassword,callback){
 		console.log('passing thru checkuser');
 		 userDao.checkLogin(usernameAndPassword,callback);
 	}
 
-}
+}*/
 
 
 var auth = {
 
 
-	standardSessionAuth : function(req, res){
+	/*standardSessionAuth : function(req, res){
 
 		if(!req.session)
 			return false;
@@ -49,7 +52,7 @@ var auth = {
 		});
 	},
 
-	fbAuth : fbAuth.authenticate,
+	fbAuth : fbAuth.authenticate,*/
 
 	checkIfLoggedIn : function(req, res, next){
 

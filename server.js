@@ -66,9 +66,17 @@ app.get('/', function(req, res){
 
 });
 
-app.get('/news',/*auth.checkIfLoggedIn,*/ newsWorker.displayAllNews);
 
-app.post('/news',/*auth.checkIfLoggedIn,*/ newsWorker.create);
+app.route('/news')
+   .get(/*auth.checkIfLoggedIn,*/ newsWorker.displayAllNews)
+   .post(/*auth.checkIfLoggedIn,*/ newsWorker.create);
+
+app.route('/news/:news_id')
+	.get(newsWorker.displaySingleNews)
+	.put(newsWorker.editSingleNews);
+
+
+
 
 
 app.get('/auth/twitter', passport.authenticate('twitter'));

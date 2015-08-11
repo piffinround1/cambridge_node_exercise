@@ -10,7 +10,7 @@ var News = require('../persistence/news.js');
 var newsUtil = {
 
 
-	create: function(req, res){
+	create: function(req, res, next){
 		
 		
 		News.findOne({title: req.body.title}, function(err, news){
@@ -41,7 +41,7 @@ var newsUtil = {
 
 	},
 
-	displayAllNews : function(req, res){
+	displayAllNews : function(req, res, next){
 
 		News.find({}, function(err, newss){
 
@@ -53,6 +53,31 @@ var newsUtil = {
 
 
 		});
+	},
+
+	displaySingleNews: function(req, res, next){
+
+		News.findById(req.params.news_id, function(err, news){
+
+			if(err)
+				throw err;
+
+			if(!news)
+				return res.json({msg:'No news with id:'+req.params.news_id});
+
+			return res.json(news);
+
+
+		});
+
+
+	},
+
+	editSingleNews: function(req,res, next){
+
+		res.json({msg:'under construction lolz:'+req.params.news_id});
+
+
 	}
 
 }

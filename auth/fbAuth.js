@@ -3,6 +3,7 @@
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var User = require('../persistence/user.js');
+var auth = require('./auth.js');
 
 passport.use(new FacebookStrategy({
     clientID: '1658069641104488',

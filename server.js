@@ -74,7 +74,7 @@ app.get('/', function(req, res){
 
 
 
-app.get('/users',auth.checkIfLoggedIn, function(req, res){
+app.get('/news',auth.checkIfLoggedIn, function(req, res){
 	
 });
 
@@ -90,18 +90,17 @@ app.get('/auth/facebook/callback',
 
 
 app.get('/signupform', function(req, res){
-
+	res.json({msg: 'sign up form' + req.flash()});
 });
 
 app.post('/signup', passport.authenticate('local-signup', {failureRedirect: '/signupform'}),
 	function(req, res){
 
-
 		res.json({msg: 'done with signup auth' + req.user});
 
 	}
 
-	);
+);
 
 
 app.post('/login', passport.authenticate('local-auth',{failureRedirect: '/'}),

@@ -20,6 +20,7 @@ var passport = require('passport');
 	dev incantations ;)
 */
 var mongocon =  require('./persistence/mongocon.js');
+var newsWorker = require('./util/newsWorker.js');
 
 
 /*
@@ -60,23 +61,14 @@ app config
 */
 
 
-
-
-
-
-
 app.get('/', function(req, res){
 	res.render('index.html',{messages : req.flash('info')});
 
 });
 
+app.get('/news',/*auth.checkIfLoggedIn,*/ newsWorker.displayAllNews);
 
-
-
-
-app.get('/news',auth.checkIfLoggedIn, function(req, res){
-	
-});
+app.post('/createNews',/*auth.checkIfLoggedIn,*/ newsWorker.create);
 
 
 app.get('/auth/twitter', passport.authenticate('twitter'));

@@ -68,7 +68,7 @@ app.get('/', function(req, res){
 
 app.get('/news',/*auth.checkIfLoggedIn,*/ newsWorker.displayAllNews);
 
-app.post('/createNews',/*auth.checkIfLoggedIn,*/ newsWorker.create);
+app.post('/news',/*auth.checkIfLoggedIn,*/ newsWorker.create);
 
 
 app.get('/auth/twitter', passport.authenticate('twitter'));

@@ -67,13 +67,3 @@ passport.deserializeUser(function(id, done) {
 
 
 
-
-var fbAuth = {
-
-	authenticate : passport.authenticate('facebook')
-	
-
-}
-
-
-module.exports = fbAuth;

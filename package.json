@@ -17,7 +17,7 @@
     "passport": "^0.2.2",
     "passport-facebook": "^2.0.0",
     "passport-local": "^1.0.0",
-    "passport-oauth2": "^1.1.2",
+    "passport-oauth2-password-grant": "0.0.3",
     "passport-twitter": "^1.0.3"
   },
   "devDependencies": {},

@@ -23,6 +23,11 @@ var userSchema = new mongoose.Schema({
         token        : String,
         displayName  : String,
         username     : String
+    },
+    idm : {
+        id : String,
+        token : String,
+        username : String
     }
 
 });

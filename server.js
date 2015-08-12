@@ -22,7 +22,7 @@ var passport = require('passport');
 var mongocon =  require('./persistence/mongocon.js');
 var newsWorker = require('./util/newsWorker.js');
 
-
+var idmAuth = require('./auth/idmAuth.js');
 /*
 app config
 */
@@ -67,6 +67,11 @@ app.get('/', function(req, res){
 });
 
 
+app.get('/idmauthsuccess', function(req, res){
+	res.json({msg:'done with IDM auth:'+ req.user});
+});
+
+
 app.route('/news')
    .get(auth.checkIfLoggedIn, newsWorker.displayAllNews)
    .post(auth.checkIfLoggedIn, newsWorker.create);
@@ -77,6 +82,8 @@ app.route('/news/:news_id')
 
 
 
+
+app.post('/auth/idm', idmAuth());
 
 
 app.get('/auth/twitter', passport.authenticate('twitter'));

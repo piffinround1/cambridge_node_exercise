@@ -8,27 +8,21 @@
     <style>
         body        { padding-top:80px; }
     </style>
-
-
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type='text/javascript' src='js/handlebars-v3.0.3.js'></script>
+    
 
 </head>
 <body>
 
-<div class="container">
+<div class="container" id='placeHolder'>
+</div>
+<script id='authPage' type="text/x-handlebars-template" src='/templates/authPageTemplate.txt'>
 
-    <div class="jumbotron text-center">
-        <h1><span class="fa fa-lock"></span>Authentication</h1>
-
-        <p>Login or Register with:</p>
-
-        <a href="/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span> Facebook</a>
-
- </div>
-
-
+</script>
 
 
 </body>
-
+<script src='/templates/authPage.js'></script>
 
 </html>

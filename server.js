@@ -22,7 +22,7 @@ var passport = require('passport');
 var mongocon =  require('./persistence/mongocon.js');
 var newsWorker = require('./util/newsWorker.js');
 
-var idmAuth = require('./auth/idmAuth.js');
+//var idmAuth = require('./auth/idmAuth.js');
 /*
 app config
 */
@@ -83,7 +83,7 @@ app.route('/news/:news_id')
 
 
 
-app.post('/auth/idm', idmAuth());
+//app.post('/auth/idm', idmAuth());
 
 
 app.get('/auth/twitter', passport.authenticate('twitter'));

@@ -25,7 +25,7 @@ passport.use('local-signup', new LocalStrategy({
 
 
 						if(user)//email taken
-							return done(null, false, {message:'Username taken'});
+							return done(null, false, req.flash('msg', 'Whoops, username taken.....'));
 
 						var newUser = new User();
 

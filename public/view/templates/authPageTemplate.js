@@ -1,0 +1,6 @@
+(function() {
+  var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
+templates['authPageTemplate'] = template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+    return "<div class=\"jumbotron text-center\">\r\n        <h1><span class=\"fa fa-lock\"></span>Authentication</h1>\r\n\r\n        <p>Login or Register with:</p>\r\n\r\n        <a href=\"/auth/facebook\" class=\"btn btn-primary\"><span class=\"fa fa-facebook\"></span> Facebook</a>\r\n        <a href=\"/auth/twitter\" class=\"btn btn-primary\"><span class=\"fa fa-twitter\"></span> Twitter</a>\r\n        <a href=\"#\" class=\"btn btn-primary\" id='localAuthBtn'><span class=\"fa \"></span> Local Sign In</a>\r\n         <a href=\"#\" class=\"btn btn-primary\" id='signupBtn'><span class=\"fa \"></span> Local Signup</a>\r\n        <a href=\"#\" class=\"btn btn-primary\" id='idmAuthBtn'><span class=\"fa \"></span> IDM Sign in</a>\r\n\r\n </div>\r\n";
+},"useData":true});
+})();

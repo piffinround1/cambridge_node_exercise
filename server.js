@@ -51,7 +51,8 @@ app.use(session({
 
 		url: mongocon.connection
 
-	})
+	}),
+	cookie: {secure:false}
 
 }));
 
@@ -65,6 +66,11 @@ app.use(flash());
 /*
 app config
 */
+
+
+app.get('*', function(req, res,next){
+	res.redirect('http://127.0.0.1:5000'+req.url);
+});
 
 
 app.get('/', function(req, res){

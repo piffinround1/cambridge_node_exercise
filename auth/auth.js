@@ -4,7 +4,7 @@ var User = require('../persistence/user.js');
 var fbAuth = require('./fbAuth.js');
 var localSignUp = require('./localSignUp.js');
 var localAuth = require('./localAuth.js');
-//var idmAuth = require('./idmAuth.js');
+var idmAuth = require('./idmAuth.js');
 var twitterAuth = require('./twitterAuth.js');
 /* incantations*/
 

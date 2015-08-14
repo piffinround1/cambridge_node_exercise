@@ -15,6 +15,7 @@ var newsSchema = new mongoose.Schema({
 
 
 newsSchema.methods.assignCreator = function(req){	
+	console.log('creator!'+req.user._id);
 	this.creator = req.user._id;
 };
 

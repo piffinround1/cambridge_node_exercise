@@ -1,0 +1,23 @@
+ 
+<div class="row">
+
+	 <div class="col-sm-6">
+	            
+	              <h3 class="text-info">NEWS::</h3>
+	 			{{#list news}}
+	            <div class="well">
+	                <h3 class="text-info">{{title}}</h3>
+	                    <p>
+	                        <strong>description</strong>: {{description}}<br>
+	                        <strong>creator</strong>: {{creator}}<br>
+	                    </p>
+
+	                    <a href="#" id='editBtn' class="btn btn-info" identifier='{{_id}}'>Edit</a>
+	                    <a href="#" id='delBtn' class="btn btn-info" identifier='{{_id}}'>Delete</a>
+	              </div>
+	             {{/list}}
+
+	        
+	</div>
+
+</div>

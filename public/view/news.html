@@ -1,0 +1,221 @@
+<html>
+
+<head>
+
+
+ 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <style>
+        body        { padding-top:80px; }
+    </style>
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type='text/javascript' src='/js/handlebars-v3.0.3.js'></script>
+    
+
+</head>
+<body>
+
+<div class="container" id='userStats'>
+</div>
+
+<div class="container" id='placeHolder'>
+	If you're seeing this, you are not logged in... Please dude, don't even try.
+	<a href='/'>Login mate</a>
+</div>
+</body>
+
+<script src='/templates/newsTemplate.js'></script>
+<script src='/templates/userStats.js'></script>
+<script src='/templates/createPutNews.js'></script>
+<script type='text/javascript'>
+	
+	var news = [];
+	var actions = {
+
+		edit:'Edit',
+		delete:'Delete',
+		create: 'Create'
+
+	}
+	var messages = {};
+
+	Handlebars.registerHelper('list', function(context, options){
+		var out = '';
+	
+		for(var i = 0 ; i < context.length ; i++){
+			out = out + options.fn(context[i]);
+		}
+		return out;
+
+	});
+
+	
+	jQuery('#placeHolder').on('click','#editBtn', function(){
+
+		var identifier = jQuery(this).attr('identifier');
+		
+		for(var i in news.news){
+			
+			var t = news.news[i];
+			console.log(identifier);
+			if(t._id ===identifier){	
+				data = t;
+				break;
+			}
+
+		}
+		
+		data.action = actions.edit;
+		jQuery('#placeHolder').hide().html(Handlebars.templates['createPutNews'](data)).fadeIn();
+
+	});
+
+	jQuery('#userStats').on('click','#createBtn', function(){
+
+			var data = {action:actions.create};
+			jQuery('#placeHolder').hide().html(Handlebars.templates['createPutNews'](data)).fadeIn();
+
+	});
+
+	jQuery('#userStats').on('click','#logoutBtn', function(){
+
+			var data = {action:actions.create};
+			jQuery('#placeHolder').hide().html(Handlebars.templates['createPutNews'](data)).fadeIn();
+
+	});
+
+
+
+	
+
+	jQuery('#placeHolder').on('click','#delBtn', function(){
+
+				var toSend = {_id: jQuery(this).attr('identifier')};
+				
+				jQuery.ajax({
+				   url: '/news',
+				   type: 'DELETE',
+				   data: toSend,
+				   success: function(data) {
+						
+						messages = data;
+						getAllNews();
+   					}
+				});
+			
+	});
+	
+
+
+		
+
+
+	jQuery('#placeHolder').on('click','#doAction', function(){
+
+		var action = jQuery(this).attr('identifier');
+		var _id = jQuery(this).attr('newsId');
+		var toSend = {description:jQuery('#newsDesc').val(), title:jQuery('#newsTitle').val(), _id:_id};
+
+		console.log(toSend);
+		switch(action){
+			case actions.edit:
+
+				jQuery.ajax({
+				   url: '/news',
+				   type: 'PUT',
+				   data: toSend,
+				   success: function(data) {
+						
+						messages = data;
+						getAllNews();
+   					}
+				});
+
+
+
+
+			break;
+			
+			case actions.create:
+					
+				jQuery.ajax({
+				   url: '/news',
+				   type: 'POST',
+				   data: toSend,
+				   success: function(data) {
+						
+						messages = data;
+						getAllNews();
+   					}
+				});
+			break;
+		}
+
+
+	});
+
+
+	jQuery(document).ready(function(){
+
+		getUserStats();
+		getAllNews();
+		//get all news
+
+	});
+
+
+	function getAllNews(){
+		jQuery.get('/news', function(data){
+			console.log(data);
+			if(data){
+				jQuery('#placeHolder').hide().html(Handlebars.templates['newsTemplate'](data)).fadeIn();
+				this.news = data;
+			}
+				
+
+		}.bind(this));
+	}
+
+
+	function getUserStats(){
+		jQuery.get('/userStats', function(data){
+			console.log(data);
+			
+			var toDispName;
+			if(data.facebook)
+				toDispName = data.facebook.name;
+
+			if(data.local)
+				toDispName = data.local.email;
+
+			if(data.twitter)
+				toDispName =data.twitter.username;
+
+			if(data.idm)
+				toDispName =data.idm.username;							
+
+		
+
+
+			var disp = {
+
+				name: toDispName
+			};
+
+
+			if(data){
+				jQuery('#userStats').hide().html(Handlebars.templates['userStats'](disp)).fadeIn();
+				
+			}
+				
+
+		}.bind(this));
+	}
+
+
+
+</script>
+
+
+
+</html>

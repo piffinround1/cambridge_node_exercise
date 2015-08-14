@@ -25,7 +25,7 @@ var newsUtil = {
 			var newNews = new News();
 			newNews.title = req.body.title;
 			newNews.description = req.body.description;
-		//	newNews.creator = newNews.assignCreator(req);
+			newNews.creator =  req.user._id;
 
 			newNews.save(function(err){
 
@@ -48,8 +48,8 @@ var newsUtil = {
 			if(err)
 				throw err;
 
-			
-				return res.json(newss);
+				console.log(newss);
+				return res.json({news:newss});
 
 
 		});
@@ -74,11 +74,64 @@ var newsUtil = {
 	},
 
 	editSingleNews: function(req,res, next){
+		console.log('req param id'+req.body._id);
+		var details = {
+			_id : req.body._id,
+			description: req.body.description,
+			title: req.body.title
+		};
 
-		res.json({msg:'under construction lolz:'+req.params.news_id});
+		News.findById(req.body._id, function(err, news){
 
+			if(!news)
+				return res.json({msg:'No Such news'});
+				
+
+
+				news.description = details.description;
+				news.title = details.title;
+				
+
+				news.save(function(err){
+					if(err)
+						throw err;
+
+					res.json({msg:'Edit done'});
+				});
+
+
+		});
+	
+
+	},
+
+	deleteSingleNews: function(req,res, next){
+		console.log('req param id'+req.body._id);
+		
+
+		News.findById(req.body._id, function(err, news){
+
+			if(!news)
+				return res.json({msg:'No Such news'});
+				
+			
+			console.log(news.title);
+
+			news.remove(function(err){
+				if(err)
+					throw err;
+
+				res.json({msg:'Delete done'});
+			});
+
+
+		
+
+		});
+	
 
 	}
+
 
 }
 

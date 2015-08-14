@@ -22,10 +22,16 @@ var passport = require('passport');
 var mongocon =  require('./persistence/mongocon.js');
 var newsWorker = require('./util/newsWorker.js');
 
-//var idmAuth = require('./auth/idmAuth.js');
+var idmAuth = require('./auth/idmAuth.js');
 /*
 app config
 */
+app.set('views', __dirname + '/public/view');
+app.engine('html',require('ejs').renderFile);
+
+app.use(express.static('public/view'));
+
+
 
 app.use(morgan('dev'));
 
@@ -54,7 +60,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-app.use(express.static('public/view/'));
+
 app.use(flash());
 /*
 app config
@@ -74,23 +80,26 @@ app.get('/idmauthsuccess', function(req, res){
 
 app.route('/news')
    .get(auth.checkIfLoggedIn, newsWorker.displayAllNews)
-   .post(auth.checkIfLoggedIn, newsWorker.create);
+   .put(auth.checkIfLoggedIn,newsWorker.editSingleNews)
+   .post(auth.checkIfLoggedIn, newsWorker.create)
+   .delete(auth.checkIfLoggedIn,newsWorker.deleteSingleNews);
 
 app.route('/news/:news_id')
 	.get(auth.checkIfLoggedIn,newsWorker.displaySingleNews)
-	.put(auth.checkIfLoggedIn,newsWorker.editSingleNews);
+	.put(auth.checkIfLoggedIn,newsWorker.editSingleNews)
+	.delete(auth.checkIfLoggedIn,newsWorker.deleteSingleNews);
 
 
 
 
-//app.post('/auth/idm', idmAuth());
+app.post('/auth/idm', idmAuth());
 
 
 app.get('/auth/twitter', passport.authenticate('twitter'));
 
 app.get('/auth/twitter/callback', passport.authenticate('twitter', {failureRedirect: '/'}), 
 	function(req, res){
-		res.json({msg: 'done with twitter auth' + req.user});
+		res.render('news.html');
 	});
 
 app.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
@@ -98,16 +107,24 @@ app.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
 app.get('/auth/facebook/callback', 
 	passport.authenticate('facebook', { failureRedirect: '/' }), 
 	function(req, res){
-		res.json({msg: 'done with fb auth' + req.user});
+		res.render('news.html');
 	});
 
 
 
-app.get('/signupform', function(req, res){
-	res.json({msg: 'sign up form' + req.flash()});
+app.get('/signupfail', function(req, res){
+	res.json(req.flash());
 });
 
-app.post('/signup', passport.authenticate('local-signup', {failureRedirect: '/signupform'}),
+
+app.get('/userStats', function(req, res){
+	console.log('User stats'+req.user);
+	res.json(req.user);
+});
+
+
+
+app.post('/signup', passport.authenticate('local-signup', {failureRedirect: '/signupfail'}),
 	function(req, res){
 
 		res.json({msg: 'done with signup auth' + req.user});
@@ -117,7 +134,7 @@ app.post('/signup', passport.authenticate('local-signup', {failureRedirect: '/si
 );
 
 
-app.post('/login', passport.authenticate('local-auth',{failureRedirect: '/'}),
+app.post('/login', passport.authenticate('local-auth',{failureRedirect: '/loginFail'}),
 	function(req, res){
 
 
@@ -126,6 +143,19 @@ app.post('/login', passport.authenticate('local-auth',{failureRedirect: '/'}),
 	}
 
 );
+
+app.get('/logout', function(req, res) {
+        req.logout();
+        res.redirect('/');
+});
+
+
+
+app.get('/loginFail', function(req, res){
+
+	res.json({msg: 'Invalid username or password'});
+
+})
 
 app.listen(5000,function(){
 

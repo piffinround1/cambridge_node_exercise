@@ -16,13 +16,98 @@
 <body>
 
 <div class="container" id='placeHolder'>
+	this is the placeholder
 </div>
-<script id='authPage' type="text/x-handlebars-template" src='/templates/authPageTemplate.txt'>
+<script src='/templates/authPageTemplate.js'></script>
+<script src='/templates/sign.js'></script>
+<script type='text/javascript'>
+
+	var sign = {
+			
+			local:{
+				login : {
+					name:'Login - Local',
+					auth: '/login'
+				},
+				signup : 
+
+					{
+						name:'Sign-up - Local',
+						auth: '/signup'
+					}
+			},
+			idm:{
+				login: {
+					name: 'IDM Auth',
+					auth: '/auth/idm'
+				}
+			}
+	
+
+	};
+
+
+	jQuery('#placeHolder').html(Handlebars.templates['authPageTemplate']({}));
+	jQuery(document).ready(function(){
+
+
+		jQuery('#signupBtn').click(function(){
+
+			jQuery('#placeHolder').hide().html(Handlebars.templates['sign']({sign:sign.local.signup.name})).fadeIn();
+
+
+		});
+
+		jQuery('#localAuthBtn').click(function(){
+
+			jQuery('#placeHolder').hide().html(Handlebars.templates['sign']({sign:sign.local.login.name})).fadeIn();
+
+
+		});
+
+		jQuery('#idmAuthBtn').click(function(){
+
+			jQuery('#placeHolder').hide().html(Handlebars.templates['sign']({sign:sign.idm.login.name})).fadeIn();
+
+
+		});
+
+
+
+		jQuery('#placeHolder').on('click', '#submitBtn', function(){
+			var formData = {email:jQuery('#username').val(), password: jQuery('#password').val(), username:jQuery('#username').val()};
+			console.log(formData);
+			switch(jQuery(this).attr('identifier')){
+				case sign.local.login.name:
+					jQuery.post(sign.local.login.auth,formData,function(data){
+
+							window.location = '/news.html';
+
+					});
+				break;
+				case sign.local.signup.name:
+						jQuery.post(sign.local.signup.auth,formData,function(data){
+
+							window.location = '/news.html';	
+
+						});
+				break;
+				case sign.idm.login.name:
+					jQuery.post(sign.idm.login.auth,formData,function(data){
+
+								window.location = '/news.html';						
+						});
+				
+			}
+		});
+
+	});
+
+
+
 
 </script>
-
-
 </body>
-<script src='/templates/authPage.js'></script>
+
 
 </html>
